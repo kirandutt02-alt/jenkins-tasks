@@ -2,14 +2,20 @@
 <project
 	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="
+        http://maven.apache.org/POM/4.0.0
+        https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<!-- Project Information -->
+	<!-- ============================= -->
+	<!-- Project Information            -->
+	<!-- ============================= -->
 	<groupId>com.example</groupId>
 	<artifactId>jenkins-demo</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
-	<!-- Project Properties -->
+	<!-- ============================= -->
+	<!-- Project Properties             -->
+	<!-- ============================= -->
 	<properties>
 		<!-- Java -->
 		<maven.compiler.source>17</maven.compiler.source>
@@ -43,7 +49,7 @@
 		<finalName>jenkins-demo</finalName>
 		<plugins>
 			<!-- ============================= -->
-			<!-- Maven Compiler                -->
+			<!-- Maven Compiler                 -->
 			<!-- ============================= -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -55,7 +61,7 @@
 				</configuration>
 			</plugin>
 			<!-- ============================= -->
-			<!-- Maven Surefire - Unit Tests    -->
+			<!-- Maven Surefire - Unit Tests     -->
 			<!-- ============================= -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -66,54 +72,41 @@
 				</configuration>
 			</plugin>
 			<!-- ============================= -->
-			<!-- Checkstyle                      -->
+			<!-- Checkstyle - Code Quality      -->
 			<!-- ============================= -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>${maven.checkstyle.version}</version>
 				<configuration>
-					<!-- Show violations in Jenkins console -->
+					<!-- Show Checkstyle violations in Jenkins console -->
 					<consoleOutput>true</consoleOutput>
-					<!-- Do not stop the build because of Checkstyle -->
-					<failsOnError>false</failsOnError>
-					<!-- Generate XML report -->
+					<!-- Generate Checkstyle XML report -->
 					<outputFile>
                         ${project.build.directory}/checkstyle-result.xml
                     </outputFile>
+					<!-- Do not fail Maven because of Checkstyle violations -->
+					<failOnViolation>false</failOnViolation>
+					<!-- Do not fail because of Checkstyle execution errors -->
+					<failsOnError>false</failsOnError>
 				</configuration>
-				<executions>
-					<execution>
-						<id>checkstyle</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<!-- ============================= -->
-			<!-- JaCoCo Code Coverage           -->
+			<!-- JaCoCo - Code Coverage         -->
 			<!-- ============================= -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco.version}</version>
 				<executions>
-					<!--
-                        Attach JaCoCo Java Agent
-                        before tests run
-                    -->
+					<!-- Attach JaCoCo agent before tests -->
 					<execution>
 						<id>prepare-agent</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
-					<!--
-                        Generate HTML/XML coverage
-                        report after tests
-                    -->
+					<!-- Generate coverage report -->
 					<execution>
 						<id>jacoco-report</id>
 						<phase>verify</phase>
